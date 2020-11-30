@@ -18,24 +18,15 @@ mongoose.connect(
     () => console.log('Connected to DB')
 )
 
-/*
-const verifyToken = (req, res, next) => {
-    const token = req.body.token
-    if (!token) {
-        return res.send('Invalid token')
-    }
+const authRoute = require('./routes/auth')
+app.use('/', authRoute)
 
-    const check = jwt.verify(token, 'admin', (err, user) => {
-        if (err) return res.send('Invalid token')
 
-        console.log(user)
-        next()
-    })
-}
-*/
-
+const verifyToken = require('./routes/verifyToken')
+app.use(verifyToken)
 
 const userRoute = require('./routes/users')
 app.use('/api/users', userRoute)
+
 
 app.listen(port, () => { console.log(`Server is running at http://localhost:${port}`) })

@@ -29,6 +29,7 @@ router.post('/', async (req, res) => {
     }
 
     const user = new User({ ...req.body })
+
     try {
         const newUser = await user.save()
         res.json(newUser)
@@ -38,12 +39,34 @@ router.post('/', async (req, res) => {
 
 })
 
-router.put('/:id', (req, res) => {
-    res.send(`Update users ${req.params.id}`)
+router.put('/:id', async (req, res) => {
+    const { error } = createValidation(req.body);
+
+    if (error) {
+        return res.status(400).send(error.details[0].message)
+    }
+
+    try {
+        const updateUser = await User.updateOne(
+            { _id: req.params.id }, 
+            {
+                $set: { ...req.body }
+            }
+        )
+
+        res.json(updateUser)
+    } catch (error) {
+        console.log(error)
+    }
 })
 
-router.delete('/:id', (req, res) => {
-    res.send(`Delete users ${req.params.id}`)
+router.delete('/:id', async (req, res) => {
+    try {
+        const deleteUser = await User.deleteOne({ _id: req.params.id })
+        res.json(deleteUser)
+    } catch (error) {
+        res.json(error)
+    }
 })
 
 module.exports = router
