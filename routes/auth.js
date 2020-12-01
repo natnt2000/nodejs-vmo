@@ -8,9 +8,10 @@ router.post('/login', async (req, res) => {
 
     if (!user) return res.status(400).send("Username doesn't exist")
 
-    if (req.body.password != user.password) return res.status(400).send('Password is incorrect')
+    if (!(await user.verifyPassword(req.body.password))) return res.status(400).send('Password is incorrect')
 
     const token = await jwt.sign({_id: user._id}, process.env.TOKEN_SECRET)
+
     res.header('auth-token', token).send(token)
 })
 
