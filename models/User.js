@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const { Schema } = mongoose
-const bcrypt = require('bcrypt')
+import bcrypt from 'bcrypt'
 
 const UserSchema = new Schema({
     username: String,
@@ -27,8 +27,16 @@ UserSchema.pre('save', async function (next) {
     }
 })
 
-UserSchema.methods.verifyPassword = function (data) {
-    return bcrypt.compare(data, this.password)
+// Methods: user.verifyPassword
+UserSchema.methods.verifyPassword = function (candidatePassword, targetPassword) {
+    return bcrypt.compare(candidatePassword, targetPassword)
 }
 
-module.exports = mongoose.model('Users', UserSchema)
+/*
+// Statics method: User.verifyPassword
+UserSchema.statics.verifyPassword = function (candidatePassword, targetPassword) {
+    return bcrypt.compare(candidatePassword, targetPassword)
+}
+*/
+
+export default mongoose.model('Users', UserSchema)

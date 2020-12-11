@@ -1,27 +1,26 @@
-const express = require('express')
-const router = express.Router()
-const { createValidation } = require('../validation')
-const User = require('../models/User')
+import User from '../models/User.js'
+import { createValidation } from '../validation.js'
 
-router.get('/', async (req, res) => {
+const getAll = async (req, res) => {
     try {
         const users = await User.find()
         res.json(users)
     } catch (error) {
         console.log(error)
     }
-})
+}
 
-router.get('/:id', async (req, res) => {
+
+const getById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
         res.json(user)
     } catch (error) {
         console.log(error)
     }
-})
+}
 
-router.post('/', async (req, res) => {
+const store = async (req, res) => {
     const { error } = createValidation(req.body);
 
     if (error) {
@@ -36,10 +35,10 @@ router.post('/', async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+}
 
-})
 
-router.put('/:id', async (req, res) => {
+const update = async (req, res) => {
     const { error } = createValidation(req.body);
 
     if (error) {
@@ -58,15 +57,15 @@ router.put('/:id', async (req, res) => {
     } catch (error) {
         console.log(error)
     }
-})
+}
 
-router.delete('/:id', async (req, res) => {
+const remove = async (req, res) => {
     try {
         const deleteUser = await User.deleteOne({ _id: req.params.id })
         res.json(deleteUser)
     } catch (error) {
         res.json(error)
     }
-})
+}
 
-module.exports = router
+export {getAll, getById, store, update, remove}
