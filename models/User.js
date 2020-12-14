@@ -3,16 +3,16 @@ const { Schema } = mongoose
 import bcrypt from 'bcrypt'
 
 const UserSchema = new Schema({
-    username: String,
+    username: {
+        type: String,
+        unique: true
+    },
     password: String,
     firstname: String,
     lastname: String,
-    role: String,
-    created_at: {
-        type: Date,
-        default: Date.now()
-    },
-    updated_at: Date
+    role: String
+}, {
+    timestamps: true
 })
 
 UserSchema.pre('save', async function (next) {

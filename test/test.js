@@ -4,7 +4,6 @@ import app from '../app.js'
 import chai from 'chai'
 const { expect } = chai
 import chaiHttp from 'chai-http'
-import User from '../models/User.js'
 chai.use(chaiHttp)
 
 
@@ -43,7 +42,7 @@ describe('Test Restful API', () => {
                     expect(res.status).equal(200)
                     expect(res.body).to.be.an('array').that.is.not.empty
                     res.body.forEach(ele => {
-                        expect(ele).to.include.all.keys('_id', 'created_at', 'username', 'password', 'firstname', 'lastname', 'role', '__v')
+                        expect(ele).to.include.all.keys('_id', 'createdAt', 'updatedAt', 'username', 'password', 'firstname', 'lastname', 'role', '__v')
                     });
                     done()
                 })

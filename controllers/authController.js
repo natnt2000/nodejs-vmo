@@ -1,5 +1,6 @@
 import User from '../models/User.js'
 import { jwtSign } from '../helpers/tokenHelper.js'
+import logger from '../winston.js'
 
 const login = async (req, res) => {
     const user = await User.findOne({ username: req.body.username })
@@ -24,6 +25,7 @@ const login = async (req, res) => {
         status: "Logged in"
     })
     
+    logger.info(`User ID - ${user._id} logged in to system`)
 }
 
 const refreshToken = async (req, res) => {

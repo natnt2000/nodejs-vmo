@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "properties": {
+        "username": {
+            "type": "string",
+            "minLength": 3
+        },
+        "password": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 32
+        },
+        "firstname": {
+            "type": "string",
+            "minLength": 3
+        },
+        "lastname": {
+            "type": "string",
+            "minLength": 3
+        },
+        "role": {
+            "type": "string",
+            "minLength": 3
+        }
+    },
+    "required": ["username", "password", "firstname", "lastname", "role"]
+}
