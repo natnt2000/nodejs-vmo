@@ -40,6 +40,7 @@ const getById = async (req, res) => {
 
 const store = async (req, res) => {
     /*
+    // Validate with Joi
     const { error } = createValidation(req.body);
 
     if (error) {

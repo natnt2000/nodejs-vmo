@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import { config } from 'dotenv'
 import authRoute from './routes/authRoute.js'
 import userRoute from './routes/userRoute.js'
+import postRoute from './routes/postRoute.js'
 
 config()
 const app = express()
@@ -26,6 +27,7 @@ app.use('/', authRoute)
 
 app.use('/api/users', userRoute)
 
+app.use('/api/posts', postRoute)
 
 app.listen(port, () => { console.log(`Server is running at http://localhost:${port}`) })
 
